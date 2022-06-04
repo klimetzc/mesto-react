@@ -4,6 +4,7 @@
   background-image: url("../../../images/logo_light.svg");
   background-size: contain;
   background-repeat: no-repeat;
+  text-decoration: none;
   width: 142px;
   height: 33px;
 }

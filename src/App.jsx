@@ -22,6 +22,7 @@ const App = () => {
     popup_avatar: false,
     popup_delete: false,
   });
+
   const [isLigthTheme, setIsLightTheme] = useState(
     localStorage.getItem("lightTheme") ? true : false
   );
@@ -30,10 +31,6 @@ const App = () => {
     link: "https://via.placeholder.com/150",
     alt: "Новое место",
   });
-
-  useEffect(() => {
-    // setThemeChanger(new ThemeChanger());
-  }, []);
 
   return (
     <Theme.Provider value={[isLigthTheme, setIsLightTheme]}>

@@ -13,14 +13,17 @@ const Header = (props) => {
       localStorage.setItem("lightTheme", true);
     }
   };
+
   return (
     <header className="header">
       <a
-        href="https://github.com/klimetzc/mesto"
+        href="https://github.com/klimetzc/mesto-react"
         target="_blank"
         className={`header__logo ${theme ? "header__logo_theme_light" : ""}`}
         rel="noreferrer"
-      ></a>
+      >
+        ㅤ
+      </a>
       <button
         onClick={handleThemeChanger}
         type="button"

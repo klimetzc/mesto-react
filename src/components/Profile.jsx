@@ -14,6 +14,7 @@ const Profile = (props) => {
   const [userName, setUserName] = useState("Username");
   const [userDescription, setUserDescription] = useState("User description");
   const [userAvatar, setUserAvatar] = useState(spinner);
+
   const openEditPopup = () => {
     console.log("clicked");
     setter({
@@ -21,12 +22,14 @@ const Profile = (props) => {
       popup_edit: true,
     });
   };
+
   const openAvatarPopup = () => {
     setter({
       ...popups,
       popup_avatar: true,
     });
   };
+
   const openAddAvatar = () => {
     setter({
       ...popups,

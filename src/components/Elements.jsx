@@ -7,6 +7,7 @@ const Elements = (props) => {
   const [isTextShown, setIsTextShown] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [cards, setCards] = useState([]);
+
   useEffect(() => {
     api
       .getCards()

@@ -5,6 +5,7 @@ import { Theme, Visibles } from "../App";
 const Element = (props) => {
   const [popups, setter] = useContext(Visibles);
   const [theme, setTheme] = useContext(Theme);
+
   const handleImageClick = () => {
     console.log("nothing");
     props.setImgInPopup({
@@ -16,6 +17,7 @@ const Element = (props) => {
       popup_image: true,
     });
   };
+
   return (
     <article className="element">
       <img
