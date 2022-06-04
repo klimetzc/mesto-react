@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { Theme, Visibles } from "../App";
+import { Theme, Visibles } from "./App";
 import spinner from "../images/loader.gif";
 import api from "../utils/api";
 
@@ -38,11 +38,17 @@ const Profile = (props) => {
   };
 
   useEffect(() => {
-    api.getUserData().then((res) => {
-      setUserName(res.name);
-      setUserDescription(res.about);
-      setUserAvatar(res.avatar);
-    });
+    api
+      .getUserData()
+      .then((res) => {
+        setUserName(res.name);
+        setUserDescription(res.about);
+        setUserAvatar(res.avatar);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setUserAvatar("https://via.placeholder.com/150x150");
+      });
   }, []);
 
   return (
@@ -60,14 +66,14 @@ const Profile = (props) => {
             <p className="profile__profession">{userDescription}</p>
           </div>
           <button
-            className={`profile__edit-button ${theme ? "profile__edit-button_theme_light" : ""}`}
+            className={`profile__edit-button ${theme && "profile__edit-button_theme_light"}`}
             onClick={openEditPopup}
           ></button>
         </div>
       </div>
 
       <button
-        className={`profile__add-button ${theme ? "profile__add-button_theme_light" : ""}`}
+        className={`profile__add-button ${theme && "profile__add-button_theme_light"}`}
         onClick={openAddAvatar}
       ></button>
     </section>

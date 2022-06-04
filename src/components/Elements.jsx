@@ -5,6 +5,7 @@ import Element from "./Element";
 
 const Elements = (props) => {
   const [isTextShown, setIsTextShown] = useState(false);
+  const [textMessage, setTextMessage] = useState("Вы ещё не добавили новых мест");
   const [isLoading, setIsLoading] = useState(true);
   const [cards, setCards] = useState([]);
 
@@ -15,6 +16,10 @@ const Elements = (props) => {
         setCards(res);
         setIsTextShown(false);
       })
+      .catch((err) => {
+        setTextMessage(`Ошибка: ${err.message}`);
+        setIsTextShown(true);
+      })
       .finally((res) => {
         setIsLoading(false);
       });
@@ -22,7 +27,7 @@ const Elements = (props) => {
 
   return (
     <section className="elements">
-      {isTextShown && <p className="elements__text">Вы ещё не добавили новых мест.</p>}
+      {isTextShown && <p className="elements__text">{textMessage}</p>}
       {isLoading && <div className="elements__loader"></div>}
       {cards.map((item) => {
         return (

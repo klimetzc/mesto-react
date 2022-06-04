@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Theme } from "../App";
+import { Theme } from "./App";
 import themeChanger from "../utils/themeChanger";
 // import "../index.css";
 
@@ -19,7 +19,7 @@ const Header = (props) => {
       <a
         href="https://github.com/klimetzc/mesto-react"
         target="_blank"
-        className={`header__logo ${theme ? "header__logo_theme_light" : ""}`}
+        className={`header__logo ${theme && "header__logo_theme_light"}`}
         rel="noreferrer"
       >
         ㅤ
@@ -27,7 +27,7 @@ const Header = (props) => {
       <button
         onClick={handleThemeChanger}
         type="button"
-        className={`theme-changer ${theme ? "theme-changer_theme_light" : ""}`}
+        className={`theme-changer ${theme && "theme-changer_theme_light"}`}
       ></button>
     </header>
   );

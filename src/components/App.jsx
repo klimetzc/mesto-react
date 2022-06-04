@@ -1,16 +1,13 @@
-import React from "react";
-import "./index.css";
-import Header from "./components/Header";
-import Profile from "./components/Profile";
-import Footer from "./components/Footer";
-import Elements from "./components/Elements";
-import PopupEdit from "./components/PopupEdit";
-import { useState } from "react";
-import { createContext } from "react";
-import PopupAvatar from "./components/PopupAvatar";
-import PopupAdd from "./components/PopupAdd";
-import PopupWithImage from "./components/PopupWithImage";
-import { useEffect } from "react";
+import "../index.css";
+import Header from "./Header";
+import Profile from "./Profile";
+import Footer from "./Footer";
+import Elements from "./Elements";
+import PopupEdit from "./PopupEdit";
+import { useState, useEffect, createContext } from "react";
+import PopupAvatar from "./PopupAvatar";
+import PopupAdd from "./PopupAdd";
+import PopupWithImage from "./PopupWithImage";
 export const Visibles = createContext("popupsVisible");
 export const Theme = createContext("dark");
 

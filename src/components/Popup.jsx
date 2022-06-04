@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import { useEffect } from "react";
-import { Visibles } from "../App";
+import { Visibles } from "./App";
 
 const Popup = (props) => {
-  const context = useContext(Visibles);
-  const popups = context[0];
-  const setter = context[1];
+  const [popups, setter] = useContext(Visibles);
   // console.log(popups);
   const currentPopup = props.type;
   const copiedPopups = { ...popups };
@@ -40,7 +38,7 @@ const Popup = (props) => {
   return (
     <div
       onClick={handleClosePopup}
-      className={`popup ${props.type} ${props.opened ? "popup_opened" : ""}`}
+      className={`popup ${props.type} ${props.opened && "popup_opened"}`}
     >
       <div className="popup__window">
         {props.children}
