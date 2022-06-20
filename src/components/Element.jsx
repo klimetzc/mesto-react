@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Theme, Visibles } from "./App";
+import { Theme, User, Visibles } from "./App";
 import api from "../utils/api";
 
 const Element = (props) => {
   const [popups, setter] = useContext(Visibles);
   const [theme, setTheme] = useContext(Theme);
-  const [isLiked, setIsLiked] = useState(props.likes.some((item) => item._id === props.user._id));
-  const [isCardOwnByCurrentUser, setIsOwner] = useState(props.user._id === props.owner._id);
+  const [user, setUser] = useContext(User);
+  const [isLiked, setIsLiked] = useState(props.likes.some((item) => item._id === user._id));
+  const [isCardOwnByCurrentUser, setIsOwner] = useState(user._id === props.owner._id);
   const [likesLength, setLikesLength] = useState(props.likes.length);
 
   const handleImageClick = () => {

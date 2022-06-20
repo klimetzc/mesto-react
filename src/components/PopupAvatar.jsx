@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import api from "../utils/api";
 import { User } from "./App";
 import PopupWithForm from "./PopupWithForm";
 
@@ -9,9 +8,7 @@ const PopupAvatar = (props) => {
 
   const handleSumbit = (e) => {
     console.log("avatar");
-    api.updateUserAvatar(inputAvatar).then((res) => {
-      setUser(res);
-    });
+    props.submitHandler(inputAvatar);
   };
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import api from "../utils/api";
+import { useEffect } from "react";
 import { Cards } from "./App";
 import PopupWithForm from "./PopupWithForm";
 
@@ -10,12 +10,14 @@ const PopupAdd = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submit add");
-    api.addCard(placeName, placeLink).then((res) => {
-      setCards([res, ...cards]);
-      console.log(cards);
-    });
+    props.submitHandler(placeName, placeLink);
   };
+
+  useEffect(() => {
+    setPlaceName("");
+    setPlaceLink("");
+  }, [props.opened]);
+
   return (
     <PopupWithForm
       opened={props.opened}

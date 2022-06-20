@@ -1,10 +1,11 @@
 import React from "react";
 import { useContext } from "react";
-import { Theme, Visibles } from "./App";
+import { Theme, User, Visibles } from "./App";
 
 const Profile = (props) => {
   const context = useContext(Visibles);
   const [theme, setTheme] = useContext(Theme);
+  const [user, setUser] = useContext(User);
   const popups = context[0];
   const setter = context[1];
 
@@ -34,15 +35,15 @@ const Profile = (props) => {
     <section className="profile">
       <div className="profile__user">
         <img
-          src={props?.user?.avatar}
+          src={user?.avatar}
           alt="Аватар пользователя (динамический)"
           className="profile__avatar"
         ></img>
         <div className="profile__avatar-button" onClick={openAvatarPopup}></div>
         <div className="profile__info">
           <div className="profile__names">
-            <h1 className="profile__username">{props?.user?.name}</h1>
-            <p className="profile__profession">{props?.user?.about}</p>
+            <h1 className="profile__username">{user?.name}</h1>
+            <p className="profile__profession">{user?.about}</p>
           </div>
           <button
             className={`profile__edit-button ${theme && "profile__edit-button_theme_light"}`}

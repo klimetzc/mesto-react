@@ -17,7 +17,7 @@ export const User = createContext("user");
 export const Cards = createContext("cards");
 
 const App = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isTextShown, setIsTextShown] = useState(false);
   const [textMessage, setTextMessage] = useState("Вы ещё не добавили новых мест");
@@ -40,10 +40,59 @@ const App = () => {
     alt: "Новое место",
   });
 
+  const addCard = (placeName, placeLink) => {
+    api
+      .addCard(placeName, placeLink)
+      .then((res) => {
+        setCards([res, ...cards]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const updateAvatar = (inputAvatar) => {
+    api
+      .updateUserAvatar(inputAvatar)
+      .then((res) => {
+        setUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteCard = (currentCard) => {
+    api
+      .deleteCard(currentCard)
+      .then((res) => {
+        setCards(cards.filter((item) => item._id !== currentCard));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const updateUserInfo = (inputName, inputProfession) => {
+    api
+      .updateUserInfo(inputName, inputProfession)
+      .then((res) => {
+        setUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    api.getUserData().then((res) => {
-      setUser(res);
-    });
+    api
+      .getUserData()
+      .then((res) => {
+        setUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     api
       .getCards()
@@ -81,9 +130,21 @@ const App = () => {
                 <Footer />
               </div>
 
-              <PopupEdit opened={popupsVisible.popup_edit} type="popup_edit"></PopupEdit>
-              <PopupAvatar opened={popupsVisible.popup_avatar} type="popup_avatar"></PopupAvatar>
-              <PopupAdd opened={popupsVisible.popup_add} type="popup_add"></PopupAdd>
+              <PopupEdit
+                opened={popupsVisible.popup_edit}
+                type="popup_edit"
+                submitHandler={updateUserInfo}
+              ></PopupEdit>
+              <PopupAvatar
+                opened={popupsVisible.popup_avatar}
+                type="popup_avatar"
+                submitHandler={updateAvatar}
+              ></PopupAvatar>
+              <PopupAdd
+                opened={popupsVisible.popup_add}
+                type="popup_add"
+                submitHandler={addCard}
+              ></PopupAdd>
               <PopupWithImage
                 opened={popupsVisible.popup_image}
                 type="popup_image"
@@ -93,6 +154,7 @@ const App = () => {
                 type="popup_delete"
                 opened={popupsVisible.popup_delete}
                 currentCard={currentCard}
+                submitHandler={deleteCard}
               />
             </User.Provider>
           </Cards.Provider>

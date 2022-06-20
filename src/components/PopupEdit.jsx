@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
-import api from "../utils/api";
 import { User } from "./App";
 import { useEffect } from "react";
 
@@ -10,11 +9,7 @@ const PopupEdit = (props) => {
   const [user, setUser] = useContext(User);
 
   const handleSubmit = (e) => {
-    console.log(12);
-    api.updateUserInfo(inputName, inputProfession).then((res) => {
-      console.log("update info res: ", res);
-      setUser(res);
-    });
+    props.submitHandler(inputName, inputProfession);
   };
 
   useEffect(() => {

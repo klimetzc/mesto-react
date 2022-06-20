@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import api from "../utils/api";
 import { Cards, Visibles } from "./App";
 import Popup from "./Popup";
 
@@ -14,9 +13,7 @@ const PopupDelete = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     setter({ ...copiedPopups });
-    api.deleteCard(props.currentCard).then((res) => {
-      setCards(cards.filter((item) => item._id !== props.currentCard));
-    });
+    props.submitHandler(props.currentCard);
   };
 
   return (
