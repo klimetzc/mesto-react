@@ -1,13 +1,15 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Theme, Visibles } from "./App";
+import api from "../utils/api";
 
 const Element = (props) => {
   const [popups, setter] = useContext(Visibles);
   const [theme, setTheme] = useContext(Theme);
+  const [isLiked, setIsLiked] = useState(props.likes.some((item) => item._id === props.user._id));
+  const [isCardOwnByCurrentUser, setIsOwner] = useState(props.user._id === props.owner._id);
+  const [likesLength, setLikesLength] = useState(props.likes.length);
 
   const handleImageClick = () => {
-    console.log("nothing");
     props.setImgInPopup({
       link: props.src,
       alt: props.title,
@@ -16,6 +18,29 @@ const Element = (props) => {
       ...popups,
       popup_image: true,
     });
+  };
+
+  const handleDeleteClick = () => {
+    setter({
+      ...popups,
+      popup_delete: true,
+    });
+    props.setCurrentCard(props.cardId);
+  };
+
+  const handleClickLike = () => {
+    console.log(props.user);
+    if (!isLiked) {
+      api.addLike(props.cardId).then((res) => {
+        setIsLiked(true);
+        setLikesLength(res.likes.length);
+      });
+    } else {
+      api.removeLike(props.cardId).then((res) => {
+        setIsLiked(false);
+        setLikesLength(res.likes.length);
+      });
+    }
   };
 
   return (
@@ -28,11 +53,17 @@ const Element = (props) => {
       ></img>
       <h2 className="element__title">{props.title}</h2>
       <div className="element__like-container">
-        <button className={`element__like ${theme && "element__like_theme_light"}`}></button>
-        <p className="element__like-label">{props.likes}</p>
+        <button
+          className={`element__like ${isLiked ? "element__like_active" : ""} ${
+            theme && "element__like_theme_light"
+          }`}
+          onClick={handleClickLike}
+        ></button>
+        <p className="element__like-label">{likesLength}</p>
       </div>
-
-      <button className="element__delete"></button>
+      {isCardOwnByCurrentUser && (
+        <button className="element__delete" onClick={handleDeleteClick}></button>
+      )}
     </article>
   );
 };

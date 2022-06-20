@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import api from "../utils/api";
+import { Cards } from "./App";
 import PopupWithForm from "./PopupWithForm";
 
 const PopupAdd = (props) => {
+  const [placeName, setPlaceName] = useState("");
+  const [placeLink, setPlaceLink] = useState("");
+  const [cards, setCards] = useContext(Cards);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("submit add");
+    api.addCard(placeName, placeLink).then((res) => {
+      setCards([res, ...cards]);
+      console.log(cards);
+    });
+  };
   return (
-    <PopupWithForm opened={props.opened} type={props.type}>
+    <PopupWithForm
+      opened={props.opened}
+      type={props.type}
+      handleSumbit={handleSubmit}
+      popupName="popup_add"
+    >
       <fieldset className="popup__fieldset">
         <h2 className="popup__title">Новое место</h2>
         <input
+          value={placeName}
+          onChange={(e) => {
+            setPlaceName(e.target.value);
+          }}
           id="place"
           type="text"
           name="place"
@@ -19,6 +42,10 @@ const PopupAdd = (props) => {
         ></input>
         <span className="popup__error-message place-error"></span>
         <input
+          value={placeLink}
+          onChange={(e) => {
+            setPlaceLink(e.target.value);
+          }}
           id="image"
           type="url"
           name="image"

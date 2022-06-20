@@ -4,16 +4,16 @@ import { Visibles } from "./App";
 
 const Popup = (props) => {
   const [popups, setter] = useContext(Visibles);
-  // console.log(popups);
   const currentPopup = props.type;
   const copiedPopups = { ...popups };
   copiedPopups[currentPopup] = false;
-  // console.log(copiedPopups);
+
   const handleEsc = (e) => {
     if (e.key === "Escape") {
       setter({ ...copiedPopups });
     }
   };
+
   useEffect(() => {
     if (props.opened) {
       document.addEventListener("keydown", handleEsc);
@@ -24,7 +24,6 @@ const Popup = (props) => {
   }, [props.opened]);
 
   const handleClosePopup = (event) => {
-    console.log(currentPopup);
     if (
       event.target.classList.contains("popup") ||
       event.target.classList.contains("popup__close-button")

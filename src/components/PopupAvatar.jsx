@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import api from "../utils/api";
+import { User } from "./App";
 import PopupWithForm from "./PopupWithForm";
 
 const PopupAvatar = (props) => {
+  const [inputAvatar, setInputAvatar] = useState("");
+  const [user, setUser] = useContext(User);
+
+  const handleSumbit = (e) => {
+    console.log("avatar");
+    api.updateUserAvatar(inputAvatar).then((res) => {
+      setUser(res);
+    });
+  };
+
+  useEffect(() => {
+    setInputAvatar("");
+  }, [props.opened]);
+
   return (
-    <PopupWithForm opened={props.opened} type={props.type}>
+    <PopupWithForm
+      opened={props.opened}
+      type={props.type}
+      popupName="popup_avatar"
+      handleSumbit={handleSumbit}
+    >
       <fieldset className="popup__fieldset">
         <h2 className="popup__title">Обновить аватар</h2>
         <input
+          value={inputAvatar}
+          onChange={(e) => setInputAvatar(e.target.value)}
           id="avatar-input"
           type="url"
           name="avatar"

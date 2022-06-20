@@ -1,42 +1,26 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import api from "../utils/api";
+import React, { useContext } from "react";
+import { Cards } from "./App";
 import Element from "./Element";
 
 const Elements = (props) => {
-  const [isTextShown, setIsTextShown] = useState(false);
-  const [textMessage, setTextMessage] = useState("Вы ещё не добавили новых мест");
-  const [isLoading, setIsLoading] = useState(true);
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api
-      .getCards()
-      .then((res) => {
-        setCards(res);
-        setIsTextShown(false);
-      })
-      .catch((err) => {
-        setTextMessage(`Ошибка: ${err.message}`);
-        setIsTextShown(true);
-      })
-      .finally((res) => {
-        setIsLoading(false);
-      });
-  }, []);
+  const [cards, setCards] = useContext(Cards);
 
   return (
     <section className="elements">
-      {isTextShown && <p className="elements__text">{textMessage}</p>}
-      {isLoading && <div className="elements__loader"></div>}
+      {props.isTextShown && <p className="elements__text">{props.textMessage}</p>}
+      {props.isLoading && <div className="elements__loader"></div>}
       {cards.map((item) => {
         return (
           <Element
             setImgInPopup={props.setImgInPopup}
             key={item._id}
+            cardId={item._id}
             src={item.link}
             title={item.name}
-            likes={item.likes.length}
+            likes={item.likes}
+            user={props.user}
+            owner={item.owner}
+            setCurrentCard={props.setCurrentCard}
           />
         );
       })}

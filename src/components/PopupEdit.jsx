@@ -1,12 +1,39 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
+import api from "../utils/api";
+import { User } from "./App";
+import { useEffect } from "react";
 
 const PopupEdit = (props) => {
+  const [inputName, setInputName] = useState("");
+  const [inputProfession, setInputProfession] = useState("");
+  const [user, setUser] = useContext(User);
+
+  const handleSubmit = (e) => {
+    console.log(12);
+    api.updateUserInfo(inputName, inputProfession).then((res) => {
+      console.log("update info res: ", res);
+      setUser(res);
+    });
+  };
+
+  useEffect(() => {
+    setInputName(user?.name ? user.name : "");
+    setInputProfession(user?.about ? user.about : "");
+  }, [props.opened, user?.about, user?.name]);
+
   return (
-    <PopupWithForm opened={props.opened} type={props.type}>
+    <PopupWithForm
+      opened={props.opened}
+      type={props.type}
+      popupName="popup_edit"
+      handleSumbit={handleSubmit}
+    >
       <fieldset className="popup__fieldset">
         <h2 className="popup__title">Редактировать профиль</h2>
         <input
+          value={inputName}
+          onChange={(e) => setInputName(e.target.value)}
           id="name"
           type="text"
           name="name"
@@ -19,6 +46,8 @@ const PopupEdit = (props) => {
         ></input>
         <span className="popup__error-message name-error"></span>
         <input
+          value={inputProfession}
+          onChange={(e) => setInputProfession(e.target.value)}
           id="profession"
           type="text"
           name="profession"
